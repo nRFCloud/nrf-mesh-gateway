@@ -1,0 +1,160 @@
+menu "nRF Cloud Mesh Gateway App"
+
+config APPLICATION_WORKQUEUE_STACK_SIZE
+        int "Application workqueue stack size"
+        default 4096
+
+config APPLICATION_WORKQUEUE_PRIORITY
+        int "Application workqueue priority"
+        default SYSTEM_WORKQUEUE_PRIORITY
+
+menu "Device and modem"
+
+config POWER_OPTIMIZATION_ENABLE
+	bool "Enable power optimization"
+	default y
+	select LTE_EDRX_REQ
+
+endmenu # Device
+
+menu "Cloud"
+
+config MQTT_KEEPALIVE
+        int "Time after last transmission to send a ping to keep connection on"
+        default 1200
+        help
+          This should be set to the expected time between messages sent from
+          this device. Making it larger than the expected data period does not
+          conserve bandwidth, as the ping is only sent if nothing else
+          has been within the specified period. Shorter values can prevent hidden
+          NAT timeouts at the carrier, but also will interrupt GPS fix attempts
+          and slow down TTFF.
+
+config LTE_CONNECT_RETRY_DELAY
+    int "LTE connection retry delay in seconds"
+    default 480
+    help
+        Time to wait before trying to connect to LTE again if the previous
+        attempt failed (in seconds).
+
+config CLOUD_CONNECT_RETRY_DELAY
+        int "Cloud connection retry delay in seconds"
+        default 480
+        help
+          Time to wait before trying to connect to the cloud again if the
+          previous attempt failed (in seconds).
+
+config CLOUD_CONNECT_COUNT_MAX
+        int "Maximum number of cloud connection attempts"
+        default 8
+
+config CLOUD_WAIT_DURATION
+        int "Cloud connection acknowledge wait duration"
+        default 30
+        help
+          How long the device should wait for a CONNACK
+          event from the cloud.
+
+config CLOUD_CONNECT_ERR_REBOOT_S
+        int "Seconds to wait before rebooting when a cloud connect error occurs"
+        default 300
+
+endmenu # Cloud
+
+choice
+        prompt "GPS device"
+        default GPS_USE_SIM
+        help
+            Select from which device GPS data will be fetched.
+
+config GPS_USE_SIM
+        bool "Use GPS simulator"
+        select GPS_SIM
+        select GPS_SIM_TRIGGER
+        help
+            Use simulated GPS data.
+
+config GPS_USE_EXTERNAL
+        bool "User provided GPS device"
+        help
+            Provide a GPS device that location data will be fetched from and
+            sent to nRF Cloud
+
+endchoice
+
+if GPS_USE_SIM
+
+config GPS_DEV_NAME
+        string
+        default GPS_SIM_DEV_NAME
+
+config GPS_TRIGGER
+        bool
+        default GPS_SIM_TRIGGER
+
+endif
+
+if GPS_USE_EXTERNAL
+config GPS_DEV_NAME
+        string "GPS device name"
+        help
+            GPS device from which location data will be fetched and sent
+            to nRF Cloud.
+
+endif
+
+config WATCHDOG_TIMEOUT_MSEC
+        int "Watchdog timeout in milliseconds"
+        default 10000
+
+config BT_MESH_GATEWAY_SUB_LIST_LEN
+        int "Bluetooth Mesh Gateway subscription List Length"
+        default 0
+        help
+            List of Bluetooth Mesh addresses for message destinations that should
+            be relayed to the cloud.
+
+config SHELL_MESH_HEALTH
+	bool "Mesh health model configuration support via the UART shell"
+	default n
+	help
+		Defines if the UART shell should support commands for configuring remote mesh node
+		health models.
+
+config SHELL_MESH_HEARTBEAT
+	bool "Mesh node heartbeat configuration support via the UART shell"
+	default n
+	help
+		Defines if the UART shell should support commands for configuring remote mesh node
+		heartbeats.
+
+config SHELL_MESH_SIG
+	bool "SIG defined mesh model configuration support via the UART shell"
+	default n
+	help
+		Defines if the UART shell should support commands for configuraing SIG defined
+		mesh models.
+
+config SHELL_MESH_VND
+	bool "Vendor defined mesh model configuration support via the UART shell"
+	default n
+	help
+		Defines if the UART shell should support commands for configuraing vendor defined
+		mesh models.
+
+config SHELL_MESH_MSG
+	bool "Direct mesh access layer message support via the UART shell"
+	default n
+	help
+		Defines if the UART shell should support commands for sending mesh access layer
+		messages directly from the application without instantiated models.
+
+endmenu
+
+menu "Zephyr Kernel"
+source "Kconfig.zephyr"
+endmenu
+
+module = NRF_CLOUD_MESH_GATEWAY
+module-str = nRF Cloud Mesh Gateway
+source "${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"

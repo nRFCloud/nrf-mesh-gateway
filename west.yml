@@ -1,0 +1,16 @@
+manfest:
+  remotes:
+    - name: nrfcloud
+      url-base: https://github.com/nRFCloud
+    - name: nordic
+      url-base: https://github.com/nrfconnect
+    - name: origin
+      url-base: https://github.com/BudkoEmbedded
+    projects:
+      - name: sdk-nrf
+        path: nrf
+        remote: origin
+        revision: gw-mesh
+        import: true
+    self:
+      path: mesh-gateway
