@@ -32,8 +32,7 @@ LOG_MODULE_REGISTER(app_gw_cloud, CONFIG_NRF_CLOUD_MESH_GATEWAY_LOG_LEVEL);
 #define CONN_CYCLE_AFTER_ASSOCIATION_REQ_MS K_MINUTES(5)
 
 #define AT_CMNG_READ_LEN 97
-#define GET_PSK_ID "AT%CMNG=2,16842753,4"
-#define GET_PSK_ID_LEN (sizeof(GET_PSK_ID)-1)
+#define GET_PSK_ID "AT%%CMNG=2,%d,4"
 #define GET_PSK_ID_ERR "ERROR"
 
 char gateway_id[NRF_CLOUD_CLIENT_ID_LEN+1];
@@ -350,24 +349,30 @@ static void cloud_event_handler(const struct cloud_backend *const backend,
 static int gw_client_id_get(char **id, size_t *id_len)
 {
 	char psk_buf[AT_CMNG_READ_LEN];
+	char get_psk_id[32];
 	int bytes_written;
 	int bytes_read;
 	int at_socket_fd;
 	int ret = 0;
 	int err;
+	int len;
 
 	at_socket_fd = nrf_socket(NRF_AF_LTE, NRF_SOCK_DGRAM, NRF_PROTO_AT);
 	if (at_socket_fd < 0) {
+		LOG_ERR("Cannot open socket: %d", at_socket_fd);
 		return -EIO;
 	}
 
-	bytes_written = nrf_write(at_socket_fd, GET_PSK_ID, GET_PSK_ID_LEN);
-	if (bytes_written != GET_PSK_ID_LEN) {
+	len = snprintf(get_psk_id, sizeof(get_psk_id), GET_PSK_ID, CONFIG_NRF_CLOUD_SEC_TAG);
+	bytes_written = nrf_write(at_socket_fd, get_psk_id, len);
+	if (bytes_written != len) {
+		LOG_ERR("Cannot send %s: %d", GET_PSK_ID, bytes_written);
 		ret = -EIO;
 		goto cleanup;
 	}
 	bytes_read = nrf_read(at_socket_fd, psk_buf, AT_CMNG_READ_LEN);
-	if (bytes_read != AT_CMNG_READ_LEN) {
+	if (bytes_read <= 0) {
+		LOG_ERR("Cannot read AT command response: %d", bytes_read);
 		ret = -EIO;
 		goto cleanup;
 	}
@@ -376,6 +381,7 @@ static int gw_client_id_get(char **id, size_t *id_len)
 		strcpy(gateway_id, "no-psk-ids");
 		*id = gateway_id;
 		*id_len = strlen(*id);
+		LOG_ERR("Error returned from AT command; PSK ID not set");
 	} else {
 /*
  * below, we extract the 'nrf-124578' portion as the gateway_id
