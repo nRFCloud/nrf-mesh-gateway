@@ -5,7 +5,7 @@ This project acts as a Bluetooth Mesh - LTE gateway. This project also has UART 
 ## Requirements:
 - Review the project's west.yml file for NCS and Zephyr versions
 - nRF 9160DK PCA10090
-- onboard nRF52840 (board controller) programmed with ncs/zephyr/samples/bluetooth/hci_uart project
+- onboard nRF52840 (board controller) programmed with ncs/nrf/samples/bluetooth/hci_lpuart project
 
 ## Support
 Currently LTE support includes:
