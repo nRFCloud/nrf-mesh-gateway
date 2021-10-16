@@ -3424,6 +3424,8 @@ static int cmd_handler(const struct shell *shell, size_t argc, char **argv)
         struct btmesh_vnd_model *vnd_model;
         union btmesh_op_args op_args;
 
+	memset(&op_args, 0, sizeof(op_args));
+
         err = cmd_parse_cmd(shell, argv);
 
         if (err) {
@@ -4392,6 +4394,7 @@ static int cmd_handler(const struct shell *shell, size_t argc, char **argv)
 #endif // CONFIG_SHELL_MESH_VND
 
 		op_args.mod_pub_set.pub.addr = cmd.args.pub_addr;
+		op_args.mod_pub_set.pub.uuid = NULL;
 		op_args.mod_pub_set.pub.app_idx = cmd.args.pub_app_idx;
 		op_args.mod_pub_set.pub.cred_flag = cmd.args.cred_flag;
 		op_args.mod_pub_set.pub.ttl = cmd.args.ttl;

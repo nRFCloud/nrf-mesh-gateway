@@ -1323,6 +1323,16 @@ uint8_t gateway_handler(const struct cloud_msg *gw_data)
         struct gateway_proc_data proc_data;
         struct gateway_proc_data *mem_ptr;
 
+	LOG_DBG("cloud message len:%d, topic:%s, data:%s",
+		gw_data->len,
+		log_strdup(gw_data->endpoint.str),
+		log_strdup(gw_data->buf));
+
+	if (strstr(gw_data->endpoint.str, "shadow") != NULL) {
+		LOG_DBG("Ignoring shadow changes");
+		return 0;
+	}
+
         root_obj = cJSON_Parse(gw_data->buf);
 
         if (root_obj == NULL) {
