@@ -863,14 +863,14 @@ Set a node's heartbeat publish parameters.
 }
 ~~~
 
-### Recieve Mesh Model Message - Gateway to Cloud
+### Receive Mesh Model Message - Gateway to Cloud
 
 ~~~json
 {
     "type": "event",
     "gatewayId": "*string*",
     "event": {
-        "type": "recieve_model_message",
+        "type": "receive_model_message",
         "netIndex": *unsinged 16-bit integer*,
         "appIndex": *unsigned 16-bit integer*,
         "sourceAddress": *unsigned 16-bit integer*,

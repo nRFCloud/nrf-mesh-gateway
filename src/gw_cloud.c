@@ -325,7 +325,7 @@ static void cloud_event_handler(const struct cloud_backend *const backend,
             break;
 
         case CLOUD_EVT_DATA_RECEIVED:
-            LOG_INF("CLOUD_EVT_DATA_RECIEVED");
+            LOG_INF("CLOUD_EVT_DATA_RECEIVED");
 	    gateway_handler(&evt->data.msg);
             break;
         

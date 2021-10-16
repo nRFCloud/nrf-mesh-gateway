@@ -879,7 +879,7 @@ static void health_current_status(struct bt_mesh_health_cli *cli, uint16_t addr,
 {
 	int i;
 
-	LOG_INF("Recieved Current Health Faults:");
+	LOG_INF("Received Current Health Faults:");
 	LOG_INF("    - Address   : 0x%04x", addr);
 	LOG_INF("    - Test ID   : 0x%02x", test_id);
 	LOG_INF("    - Company ID: 0x%04x", cid);

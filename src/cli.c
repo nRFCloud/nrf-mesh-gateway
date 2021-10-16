@@ -1110,17 +1110,17 @@ SHELL_CMD_REGISTER(appkey, &appkey_subs, APPKEY_HELP, NULL);
 #define ARG_HB_PUB_LPN_STATE_HELP \
         "ENABLE or DISABLE low-power-node heartbeat publications. Either 0, 1, disable, enable, false, true.\n"
 #define ARG_HB_SUB_SRC_HELP \
-	"Unsigned 16-bit source address to recieve heartbeat messages from.\n"
+	"Unsigned 16-bit source address to receive heartbeat messages from.\n"
 #define ARG_HB_SUB_DEST_HELP \
-	"Unsigned 16-bit destination address to recieve heartbeat messages on.\n"
+	"Unsigned 16-bit destination address to receive heartbeat messages on.\n"
 #define ARG_HB_SUB_PERIOD_HELP \
 	"Logarithmic subscription period to keep listening for. Decoded as (1 << (period - 1)) seconds.\n"
 #define ARG_HB_SUB_COUNT_HELP \
-	"Logarithmic heartbeat message recieve count. Decoded as (1 << (count - 1)).\n"
+	"Logarithmic heartbeat message receive count. Decoded as (1 << (count - 1)).\n"
 #define ARG_HB_SUB_MIN_HELP \
-	"Minimum hops in recieved messages, ie shortest path from source to destination.\n"
+	"Minimum hops in received messages, ie shortest path from source to destination.\n"
 #define ARG_HB_SUB_MAX_HELP \
-	"Maximum hops in recieved messages, ie longest path from source to destination.\n"
+	"Maximum hops in received messages, ie longest path from source to destination.\n"
 #endif // CONFIG_SHELL_MESH_HEARTBEAT
 
 /* Command help messages */
@@ -2627,7 +2627,7 @@ static int cmd_parse_args(const struct shell *shell, size_t argc, char **argv)
                                 return 0;
                         }
 
-                        shell_error(shell, "%s Expected at least %d, Recieved %d\n",
+                        shell_error(shell, "%s Expected at least %d, Received %d\n",
                                         NUM_ARGS_ERR, i+j+1, argc);
                         return -EINVAL;
                 }
@@ -4791,7 +4791,7 @@ static int cmd_handler(const struct shell *shell, size_t argc, char **argv)
 void cli_msg_callback(uint32_t opcode, struct bt_mesh_msg_ctx *ctx, struct net_buf_simple *buf)
 {
         shell_print(shell,
-                        "Recieved Mesh Model Message:\n"
+                        "Received Mesh Model Message:\n"
                         "    - Opcode             : 0x%08x - %s\n"
                         "    - Network Index      : 0x%04x\n"
                         "    - Application Index  : 0x%04x\n"
@@ -4811,7 +4811,7 @@ void cli_hlth_cb(uint16_t addr, uint8_t test_id, uint16_t cid, uint8_t *faults, 
 	int i;
 
 	shell_print(shell,
-			"Recieved Node Current Health Faults:\n"
+			"Received Node Current Health Faults:\n"
 			"    - Address   : 0x%04x\n"
 			"    - Test ID   : 0x%04x\n"
 			"    - Company ID: 0x%04x\n"

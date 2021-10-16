@@ -1712,7 +1712,7 @@ int codec_encode_model_msg(char *buf, size_t buf_len, uint32_t opcode, struct bt
         cJSON *payload_obj;
         cJSON *byte_obj;
 
-        if (!codec_init_event(&model_status_obj, &event_obj, "recieve_model_message")) {
+        if (!codec_init_event(&model_status_obj, &event_obj, "receive_model_message")) {
                 return -ENOMEM;
         }
 

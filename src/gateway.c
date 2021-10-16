@@ -1323,7 +1323,7 @@ uint8_t gateway_handler(const struct cloud_msg *gw_data)
         struct gateway_proc_data proc_data;
         struct gateway_proc_data *mem_ptr;
 
-	LOG_DBG("cloud message len:%d, topic:%s, data:%s",
+	LOG_DBG("Cloud message len:%d, topic:%s, data:%s",
 		gw_data->len,
 		log_strdup(gw_data->endpoint.str),
 		log_strdup(gw_data->buf));
@@ -1396,7 +1396,7 @@ uint8_t gateway_handler(const struct cloud_msg *gw_data)
 
         proc_data.root_obj = root_obj;
         proc_data.op_obj = op_obj;
-        LOG_DBG("Recieved request:");
+        LOG_DBG("Received request:");
 
         if (strings_equal(op_type_str, "beacon_request")) {
                 log_handler_proc(GATEWAY_PROC_BEACON_REQ);

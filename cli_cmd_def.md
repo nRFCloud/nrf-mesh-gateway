@@ -12,7 +12,7 @@ In many cases arguments can be auto-completed using the `tab` key. These are cas
 	- `true`
 
 ## Unprovisioned Device Beacon Commands
-The `beacon` command set is used for interfacing with unprovisioned device beacons that are recieved by the gateway.
+The `beacon` command set is used for interfacing with unprovisioned device beacons that are received by the gateway.
 
 - `beacon list`
 
@@ -31,7 +31,7 @@ The `beacon` command set is used for interfacing with unprovisioned device beaco
 	Un-block an unprovisioned device beacon from appearing in the unprovisioned device beacon list.
 	
 ## Device Provisioning Command
-The `provision` command is used to provision a device making it a node in the mesh network. An unprovisioned device beacon for the desired device must be recieved by the gateway before provisioning can take place.
+The `provision` command is used to provision a device making it a node in the mesh network. An unprovisioned device beacon for the desired device must be received by the gateway before provisioning can take place.
 
 - `provision <UUID> [-i netIdx] [-a addr] [-t attn]`
 	- `UUID` - Mandatory. 128-bit hexadecimal UUID of the device to be provisioned.
@@ -186,9 +186,9 @@ Commands for setting the subscribe and publish parameters of a node's heartbeat.
 	- `src` - Mandatory. The source address of heartbeat messages to subscribe to.
 	- `dest` - Mandatory. The destination address of heartbeat messages to subscribe to.
 	- `period` - Mandatory. Logarithmic subscription period to listen for heartbeat messages. (1 << (count - 1)).
-	- `count` - Mandatory. Logarithmic heartbeat message recieve count. (1 << (count - 1)).
-	- `min` - Mandatory. Minimum number of hops for recieved heartbeat messages.
-	- `max` - Mandatory. Maximum number of hops for recieved heartbeat messages.
+	- `count` - Mandatory. Logarithmic heartbeat message receive count. (1 << (count - 1)).
+	- `min` - Mandatory. Minimum number of hops for received heartbeat messages.
+	- `max` - Mandatory. Maximum number of hops for received heartbeat messages.
 
 	Set a node's heartbeat subscribe parameters.
 
@@ -397,12 +397,12 @@ Commands for configuring the addresses subscribed to by Bluetooth mesh models wi
 The `message` command set is used for interfaceing directly with mesh model messages using the gateway.
 
 ### Message Address Subscribe Commands
-Commands for subscribing to and unsubscribing from mesh addresses for which destined messages should be recieved by the gateway and relayed to the user.
+Commands for subscribing to and unsubscribing from mesh addresses for which destined messages should be received by the gateway and relayed to the user.
 
 - `message subscribe <addr>`
 	- `addr` - Mandatory. Mesh address for the gateway to subscribe to.
 
-	Subscribe to a mesh address to recieve messages destined for it.
+	Subscribe to a mesh address to receive messages destined for it.
 
 - `message unsubscribe <addr>`
 	- `addr` - Mandatory. Mesh address for the gateway to unsubscribe from.
