@@ -879,7 +879,7 @@ static void health_current_status(struct bt_mesh_health_cli *cli, uint16_t addr,
 {
 	int i;
 
-	LOG_INF("Recieved Current Health Faults:");
+	LOG_INF("Received Current Health Faults:");
 	LOG_INF("    - Address   : 0x%04x", addr);
 	LOG_INF("    - Test ID   : 0x%02x", test_id);
 	LOG_INF("    - Company ID: 0x%04x", cid);
@@ -979,6 +979,7 @@ static void btmesh_msg_cb(uint32_t opcode, struct bt_mesh_msg_ctx *ctx, struct n
         LOG_DBG("    app_idx: 0x%04x", ctx->app_idx);
         LOG_DBG("    Source Address: 0x%04x", ctx->addr);
         LOG_DBG("    Destination Address: 0x%04x", ctx->recv_dst);
+        LOG_HEXDUMP_DBG(buf->data, buf->len, "Payload");
 
         for (i = 0; i < CONFIG_BT_MESH_GATEWAY_SUB_LIST_LEN; i++) {
                 if (cli_sub_list[i] == ctx->recv_dst) {
