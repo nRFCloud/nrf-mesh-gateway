@@ -450,12 +450,14 @@ static void cloud_api_init(void)
     if (ret) {
         LOG_ERR("Cloud backend could not be initialized, error: %d", ret);
         cloud_error_handler(ret);
-    }
+    } else {
+        char id[NRF_CLOUD_CLIENT_ID_MAX_LEN] = {0};
 
-    if (ret) {
-        LOG_ERR("Cloud command decoder could not be initialized, error: %d",
-                ret);
-        cloud_error_handler(ret);
+        ret = nrf_cloud_client_id_get(id, NRF_CLOUD_CLIENT_ID_MAX_LEN);
+        if (!ret) {
+	    printk("Device ID: %s\n", id);
+        }
+        printk("Cloud init complete.\n");
     }
 }
 
