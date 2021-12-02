@@ -538,7 +538,7 @@ Bind an application key to a VENDOR defined model on a node.
 }
 ~~~
 
-#### Unbind Applicaiton Key
+#### Unbind Application Key
 Unbind an application key from a SIG defined model.
 
 ~~~json
